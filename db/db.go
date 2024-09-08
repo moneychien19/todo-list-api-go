@@ -33,4 +33,16 @@ func createTables() {
 	if err != nil {
 		panic("Failed to create todos table")
 	}
+
+	createUsersTable := `
+		CREATE TABLE IF NOT EXISTS users (
+			name TEXT,
+			email TEXT,
+			password TEXT
+	);
+	`
+	_, err = DB.Exec(createUsersTable)
+	if err != nil {
+		panic("Failed to create users table")
+	}
 }
