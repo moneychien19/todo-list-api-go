@@ -1,6 +1,6 @@
 # Todo List API
 
-This is a practice project of [Todo List API](https://roadmap.sh/projects/todo-list-api).
+This is a practice project for [Todo List API](https://roadmap.sh/projects/todo-list-api).
 
 ## Usage
 
@@ -8,12 +8,14 @@ This is a practice project of [Todo List API](https://roadmap.sh/projects/todo-l
 
 ```bash
 git clone https://github.com/moneychien19/todo-list-api-go.git
+cd todo-list-api-go
+./main # and the server will run on localhost:8080
 ```
 
 ### User Registration
 
 ```
-POST /register
+POST http://localhost:8080/register
 {
   "name": "John Doe",
   "email": "john@doe.com"
@@ -24,7 +26,7 @@ POST /register
 ### User Login
 
 ```
-POST /login
+POST http://localhost:8080/login
 {
   "email": "john@doe.com",
   "password": "password"
@@ -34,7 +36,8 @@ POST /login
 ### Create a Todo Item
 
 ```
-POST /todos
+POST http://localhost:8080/todos
+Authorization: token
 {
   "title": "Buy groceries",
   "description": "Buy milk, eggs, and bread"
@@ -44,7 +47,8 @@ POST /todos
 ### Update a Todo Item
 
 ```
-PUT /todos/1
+PUT http://localhost:8080/todos/1
+Authorization: <token>
 {
   "title": "Buy groceries",
   "description": "Buy milk, eggs, bread, and cheese"
@@ -54,11 +58,13 @@ PUT /todos/1
 ### Delete a Todo Item
 
 ```
-DELETE /todos/1
+DELETE http://localhost:8080/todos/1
+Authorization: <token>
 ```
 
 ### Get Todo Items
 
 ```
-GET /todos?page=1&limit=10
+GET http://localhost:8080/todos?page=1&limit=10
+Authorization: <token>
 ```
