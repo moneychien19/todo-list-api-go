@@ -9,7 +9,17 @@ import (
 )
 
 func getTodos(context *gin.Context) {
-	todos, err := models.GetTodos()
+	page, err := strconv.ParseInt(context.DefaultQuery("page", "1"), 10, 64)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	limit, err := strconv.ParseInt(context.DefaultQuery("limit", "10"), 10, 64)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	todos, err := models.GetTodos(page, limit)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

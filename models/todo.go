@@ -10,9 +10,9 @@ type Todo struct {
 	Description string `binding:"required"`
 }
 
-func GetTodos() ([]Todo, error) {
-	query := "SELECT * FROM todos"
-	rows, err := db.DB.Query(query)
+func GetTodos(page, limit int64) ([]Todo, error) {
+	query := "SELECT * FROM todos LIMIT ? OFFSET ?"
+	rows, err := db.DB.Query(query, limit, (page - 1) * limit)
 	if err != nil {
 		return nil, err
 	}	
