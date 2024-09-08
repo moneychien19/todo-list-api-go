@@ -30,6 +30,8 @@ func getTodos(context *gin.Context) {
 }
 
 func createTodos(context *gin.Context) {
+	userEmail := context.GetString("email")
+
 	var todo models.Todo
 	err := context.ShouldBind(&todo)
 	if err != nil {
@@ -37,7 +39,7 @@ func createTodos(context *gin.Context) {
 		return
 	}
 
-	todoCreated, err := todo.CreateTodo()
+	todoCreated, err := todo.CreateTodo(userEmail)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -46,6 +48,8 @@ func createTodos(context *gin.Context) {
 }
 
 func updateTodos(context *gin.Context) {
+	userEmail := context.GetString("email")
+
 	id, err := strconv.ParseInt(context.Param("id"), 10, 64)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -59,7 +63,7 @@ func updateTodos(context *gin.Context) {
 		return
 	}
 
-	todoUpdated, err := todo.UpdateTodoById(id)
+	todoUpdated, err := todo.UpdateTodoById(id, userEmail)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -68,13 +72,15 @@ func updateTodos(context *gin.Context) {
 }
 
 func deleteTodos (context *gin.Context) {
+	userEmail := context.GetString("email")
+
 	id, err := strconv.ParseInt(context.Param("id"), 10, 64)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	err = models.DeleteTodoById(id)
+	err = models.DeleteTodoById(id, userEmail)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

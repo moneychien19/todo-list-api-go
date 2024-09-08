@@ -26,7 +26,8 @@ func createTables() {
 		CREATE TABLE IF NOT EXISTS todos (
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			title TEXT,
-			description TEXT
+			description TEXT,
+			createdBy TEXT
 			);`
 	
 	_, err := DB.Exec(createTodosTable)

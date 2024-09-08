@@ -1,13 +1,18 @@
 package routes
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/moneychien19/todo-list-api-go/middlewares"
+)
 
 func RegisterRoutes(server *gin.Engine) {
-	server.GET("/todos", getTodos)
-	server.POST("/todos", createTodos)
-	server.PUT("/todos/:id", updateTodos)
-	server.DELETE("/todos/:id", deleteTodos)
-
+	authenticated := server.Group("/")
+	authenticated.Use(middlewares.Authentication)
+	authenticated.POST("/todos", createTodos)
+	authenticated.PUT("/todos/:id", updateTodos)
+	authenticated.DELETE("/todos/:id", deleteTodos)
+	authenticated.GET("/todos", getTodos)
+	
 	server.POST("/register", createUser)
 	server.POST("/login", login)
 }
