@@ -24,7 +24,9 @@ func getTodos(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	context.JSON(http.StatusOK, gin.H{"todos": todos})
+	
+	todosCount := len(todos)
+	context.JSON(http.StatusOK, gin.H{"data": todos, "page": page, "limit": limit, "total": todosCount})
 }
 
 func createTodos(context *gin.Context) {
@@ -40,7 +42,7 @@ func createTodos(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	context.JSON(http.StatusCreated, gin.H{"todo": todoCreated})
+	context.JSON(http.StatusCreated, todoCreated)
 }
 
 func updateTodos(context *gin.Context) {
@@ -62,7 +64,7 @@ func updateTodos(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	context.JSON(http.StatusOK, gin.H{"todo": todoUpdated})
+	context.JSON(http.StatusOK, todoUpdated)
 }
 
 func deleteTodos (context *gin.Context) {
