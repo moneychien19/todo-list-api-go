@@ -9,6 +9,7 @@ This is a practice project for [Todo List API](https://roadmap.sh/projects/todo-
 ```bash
 git clone https://github.com/moneychien19/todo-list-api-go.git
 cd todo-list-api-go
+go build -o main
 ./main # and the server will run on localhost:8080
 ```
 
